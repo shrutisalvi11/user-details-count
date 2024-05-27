@@ -1,0 +1,48 @@
+<div class="row mt-5">
+    <div class="col-md-6">
+        <h6 class="text-center mb-5">Country wise data</h6>
+        <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="countryData" [gradient]="gradient"
+            [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel">
+        </ngx-charts-bar-vertical>
+
+    </div>
+
+    <div class="col-md-6">
+        <h6 class="text-center mb-5">City wise data</h6>
+        <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="cityData" [gradient]="gradient"
+            [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel">
+        </ngx-charts-bar-vertical>
+
+    </div>
+
+    <div class="col-md-6">
+        <h6 class="text-center mb-3">Gender Count</h6>
+
+        <ngx-charts-pie-chart [view]="view" [results]="genderData" [scheme]="colorScheme">
+            <ng-template #tooltipTemplate let-model="model">
+                <h1>
+                    {{model.name}}
+                </h1>
+                <h2>{{model.value}}</h2>
+            </ng-template>
+        </ngx-charts-pie-chart>
+    </div>
+
+    <div class="col-md-6">
+        <h6 class="text-center mb-3">Age Group Count</h6>
+
+        <ngx-charts-pie-chart
+        [view]="view"
+        [results]="agegroup"
+        [scheme]="colorScheme">
+        <ng-template #tooltipTemplate let-model="model">
+        <h1>
+        {{model.name}}
+        </h1>
+        <h2>{{model.value}}%</h2>
+        </ng-template>
+        </ngx-charts-pie-chart>
+    </div>
+</div>

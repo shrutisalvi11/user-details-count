@@ -1,0 +1,270 @@
+<div class="container">
+    <ng-template #callAPIDialog>
+        <h4 class="mb-3">{{editMode==true?'Update Task':'Add Task'}}</h4>
+        <form [formGroup]="userForm">
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Enter First Name</mat-label>
+                        <input matInput formControlName="firstName">
+                        <mat-error *ngIf="userForm.get('firstName').hasError('required')">This field is required
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Enter Last Name</mat-label>
+                        <input matInput formControlName="lastName">
+                        <mat-error *ngIf="userForm.get('lastName').hasError('required')">This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Gender</mat-label>
+                        <mat-select disableRipple formControlName="gender">
+                            <mat-option value="male">Male</mat-option>
+                            <mat-option value="female">Female</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="userForm.get('gender').hasError('required')">This field is required
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Enter Contact Number</mat-label>
+                        <input matInput formControlName="contact">
+                        <mat-error *ngIf="userForm.get('contact').hasError('required')">This field is required
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Email ID</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-error *ngIf="userForm.get('email').hasError('required')">This field is required</mat-error>
+                        <mat-error *ngIf="userForm.get('email').hasError('email')">Enter proper email</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Designation</mat-label>
+                        <input matInput formControlName="designation">
+                        <mat-error *ngIf="userForm.get('email').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="dob"
+                            (dateChange)="onDateChange($event)">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="userForm.get('email').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Populate age as per DOB</mat-label>
+                        <input matInput formControlName="age">
+                        <mat-error *ngIf="userForm.get('age').hasError('required')">This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Country</mat-label>
+                        <mat-select disableRipple formControlName="country">
+                            <mat-option value="">Select</mat-option>
+                            <mat-option *ngFor="let country of countries" [value]="country.name"
+                                [attr.data-country-name]="country.name">{{ country.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="userForm.get('country').hasError('required')">This field is required
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>State</mat-label>
+                        <mat-select disableRipple formControlName="state">
+                            <mat-option value="">Select</mat-option>
+                            <mat-option *ngFor="let state of states" [value]="state" [attr.data-state-name]="state">{{
+                                state
+                                }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="userForm.get('state').hasError('required')">This field is required</mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>City</mat-label>
+                        <mat-select disableRipple formControlName="city">
+                            <mat-option value="">Select</mat-option>
+                            <mat-option *ngFor="let city of filteredCities" [value]="city" [attr.data-city-name]="city">
+                                {{
+                                city}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="userForm.get('city').hasError('required')">This field is required</mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>Pincode</mat-label>
+                        <input matInput placeholder="Pincode" formControlName="pincode">
+                        <mat-error *ngIf="userForm.get('pincode').hasError('required')">This field is required
+                        </mat-error>
+                        <mat-error *ngIf="userForm.get('pincode').hasError('pattern')">Pincode should be 8 digit
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-md-3 mb-5">
+                    <input type="file" id="myFile" name="filename" formControlName="photo">
+                </div>
+                <div>
+                    <button mat-raised-button color="primary" (click)="onSubmit()" class="mx-2">{{editMode==true?'Update Task':'Add
+                        Task'}}</button>
+                        <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+                </div>
+
+            </div>
+        </form>
+    </ng-template>
+
+    <div class="mt-5">
+        <h3 class="text-center">User Details</h3>
+        <div class="d-flex">
+            <div>
+                <button class="text-light" style="background-color: #3f51b5;" title="Click to edit data" mat-stroked-button
+                (click)="addDialog()">Add</button>
+                <button class="text-light mx-3" style="background-color: #3f51b5;" title="Click to see graph data" mat-stroked-button
+                (click)="showGraph()">Graph Data</button>    
+            </div>
+          <div>
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="search" #input>
+            </mat-form-field>
+          </div>
+       
+        </div>
+        
+        
+    </div>
+
+    
+    <div class="border mt-5">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-striped">
+
+            <ng-container matColumnDef="First Name">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> First Name </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.firstName || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Last Name">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> Last Name </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.lastName || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Gender">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> Gender </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.gender || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Contact Number">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> Contact Number </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.contact || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Email ID">
+                <th class="table-header" mat-header-cell *matHeaderCellDef>Email ID </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.email || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Designation">
+                <th class="table-header" mat-header-cell *matHeaderCellDef>Designation</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.designation || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="DOB">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> DOB </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.dob | date: 'dd/MM/yyyy'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Photo">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> Photo</th>
+                <td mat-cell *matCellDef="let element">
+                    <img src="{{element?.photo}}">
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Country">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> Country </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.country || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="State">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> State </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.state || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="City">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> City</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.city || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Pincode">
+                <th class="table-header" mat-header-cell *matHeaderCellDef> Pincode </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element?.pincode || '-'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Edit">
+                <th class="table-header text-center" mat-header-cell *matHeaderCellDef> Edit </th>
+                <td mat-cell class="text-center" *matCellDef="let element ;index as i">
+                    <button class="text-light" style="background-color: #3f51b5;" title="Click to edit data"
+                        mat-stroked-button (click)="updateDialog(i)">update</button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+    </div>
+</div>
